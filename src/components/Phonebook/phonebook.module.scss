@@ -10,7 +10,6 @@
 .block {
   display: flex;
   flex-direction: column;
-
 }
 
 .formGroup {
@@ -20,7 +19,6 @@
 
   padding: 15px 50px 15px 15px;
 
- 
   border-radius: 5px;
   box-shadow: 5px 5px 20px -7px rgba(66, 68, 90, 1);
 }
@@ -46,11 +44,11 @@ input {
   border: 1px solid black;
   border-radius: 5px;
 
- &:hover, &:focus {
-  border: 2px solid teal;
- }
+  &:hover,
+  &:focus {
+    border: 2px solid teal;
+  }
 }
-
 
 .btn {
   width: 100px;
@@ -59,13 +57,14 @@ input {
   cursor: pointer;
 
   font-weight: bold;
-  
+
   border: 1px solid black;
   border-radius: 5px;
 
   background-color: transparent;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: wheat;
   }
 }
@@ -77,13 +76,14 @@ input {
   cursor: pointer;
 
   text-align: center;
-  
+
   border: 1px solid black;
   border-radius: 5px;
 
   background-color: transparent;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: wheat;
   }
 }
@@ -92,6 +92,6 @@ input {
   display: flex;
   align-items: baseline;
   text-align: center;
-  max-width: 250px;
+  max-width: 323px;
   margin-bottom: 15px;
 }
