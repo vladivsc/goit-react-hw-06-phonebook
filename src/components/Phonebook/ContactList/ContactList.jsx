@@ -1,37 +1,35 @@
-import styles from '../phonebook.module.scss';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const ContactList = ({ deleteContact, contacts }) => {
-  const contact = contacts.map(({ id, name, number }) => (
-    <div key={id} className={styles.blockItem}>
-      <li>
-        {name} {number}
-      </li>
-      <button
-        onClick={() => deleteContact(id)}
-        type="button"
-        className={styles.btnDelete}
-      >
-        Delete
-      </button>
-    </div>
-  ));
-  return <ul className={styles.list}>{contact}</ul>;
+import styles from '../phonebook.module.scss';
+
+import { getContacts, getFilter } from 'redux/selectors';
+import ContactItem from './ContactItem/ContactItem';
+
+const ContactList = () => {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const getFilteredContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  const filterContacts = getFilteredContacts();
+
+  return (
+    <ul className={styles.list}>
+      {contacts.length === 0 ? (
+        <p>Contacts list is empty!</p>
+      ) : (
+        filterContacts.map(({ id, name, number }) => {
+          return (
+            <ContactItem key={id} name={name} number={number} nameId={id} />
+          );
+        })
+      )}
+    </ul>
+  );
 };
 
 export default ContactList;
-
-ContactList.defaultProps = {
-  items: [],
-};
-
-ContactList.propTypes = {
-  deleteContact: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    })
-  ),
-};

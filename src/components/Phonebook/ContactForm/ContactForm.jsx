@@ -1,26 +1,32 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import initialState from 'components/initialState';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from 'redux/contacts-slice';
+import { getContacts } from 'redux/selectors';
 
-import styles from '../phonebook.module.scss'
+import initialState from 'components/Phonebook/initialState';
 
-const ContactForm = ({ onSubmit }) => {
-  const [state, setState] = useState({ ...initialState });
+import styles from '../phonebook.module.scss';
+
+const ContactForm = () => {
+  const getContact = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setState(prevState => {
-      return { ...prevState, [name]: value };
-    });
+    return (initialState[name] = value);
+  };
+
+  const handleAddContact = data => {
+    if (getContact.find(contact => contact.name === data.name))
+      return alert(`${data.name} is already in contacts`);
+
+    dispatch(addContact(data));
   };
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    onSubmit({ name, number });
-    setState({ ...initialState });
+    handleAddContact(initialState);
+    evt.target.reset();
   };
-
-  const { name, number } = state;
 
   return (
     <div className={styles.block}>
@@ -29,7 +35,6 @@ const ContactForm = ({ onSubmit }) => {
           <label>Name</label>
           <input
             onChange={handleChange}
-            value={name}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -39,7 +44,6 @@ const ContactForm = ({ onSubmit }) => {
           <label>Number</label>
           <input
             onChange={handleChange}
-            value={number}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -56,8 +60,3 @@ const ContactForm = ({ onSubmit }) => {
 };
 
 export default ContactForm;
-
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-}
