@@ -1,4 +1,4 @@
-export const getAllContacts = ({ contacts }) => contacts;
+export const getContacts = ({ contacts }) => contacts;
 
 export const getFilteredContacts = ({ contacts, filter }) => {
   if (!filter) {
@@ -10,3 +10,4 @@ export const getFilteredContacts = ({ contacts, filter }) => {
   });
   return result;
 };
+export const getFilter = ({ filter }) => filter;
