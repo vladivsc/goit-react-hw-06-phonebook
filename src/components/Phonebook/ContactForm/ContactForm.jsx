@@ -16,7 +16,11 @@ const ContactForm = () => {
   };
 
   const handleAddContact = data => {
-    if (getContact.find(contact => contact.name === data.name))
+    if (
+      getContact.find(
+        contact => contact.name.toLowerCase() === data.name.toLowerCase()
+      )
+    )
       return alert(`${data.name} is already in contacts`);
 
     dispatch(addContact(data));
